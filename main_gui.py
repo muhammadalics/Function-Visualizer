@@ -9,10 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from matplotlib.backends.backend_qt5agg import FigureCanvas, NavigationToolbar2QT as NavigationToolbar
-import numpy as np
-from matplotlib.figure import Figure
-import func_val_calc as fn_calc
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -142,8 +139,6 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFunctions.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
-
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -184,33 +179,6 @@ class Ui_MainWindow(object):
         self.actionabs.setText(_translate("MainWindow", "abs"))
         self.actionDocs.setText(_translate("MainWindow", "Docs"))
 
-        self.pushButton_viz.clicked.connect(self.OnClick)
-
-    def canvas(self, x, y):
-
-        static_canvas = FigureCanvas(Figure(figsize=(5, 3)))
-        self.verticalLayout.addWidget(static_canvas)
-        self._static_ax = static_canvas.figure.subplots()
-        self._static_ax.plot(x,y,".")
-
-    def OnClick(self):
-        print('button clicked')
-        xmin = float(self.lineEdit_xmin.text())
-        xmax = float(self.lineEdit_xmax.text())
-        xstep = float(self.lineEdit_xstep.text())
-        ymin = float(self.lineEdit_ymin.text())
-        ymax = float(self.lineEdit_ymax.text())
-        eq = self.lineEdit_equation.text()
-        print(xmin)
-        print(eq)
-        x,y = fn_calc.func_val(eq, xmin, xmax, ymin, ymax, xstep)
-
-        print(x)
-        print(y)
-
-        self.canvas(x,y)
-
-
 
 if __name__ == "__main__":
     import sys
@@ -220,8 +188,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
-
-
-
-
