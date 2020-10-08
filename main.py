@@ -4,6 +4,7 @@ import numpy as np
 from matplotlib.figure import Figure
 import func_val_calc as fn_calc
 from PyQt5.QtWidgets import QMessageBox
+from functools import partial
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -175,8 +176,22 @@ class Ui_MainWindow(object):
         self.actionabs.setText(_translate("MainWindow", "abs"))
         self.actionDocs.setText(_translate("MainWindow", "Docs"))
 
+
         self.pushButton_viz.clicked.connect(self.OnClick)
         self.count = 0
+        # self.actiontan.triggered.connect(self.editfunction)
+
+        #Connecting menu items with equation box
+        fn_list = ['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh', 'ln', 'log', 'exp', 'sqrt', 'abs']
+        for math_function in fn_list:
+            print(math_function)
+            a = MainWindow.findChild(QtWidgets.QAction, 'action'+math_function)
+            a.triggered.connect(partial(self.editfunction,math_function))
+
+
+
+
+
 
     def canvas(self, x, y):
         if self.count == 0:
@@ -240,6 +255,12 @@ class Ui_MainWindow(object):
         err.exec_()
         return
 
+    #This function updates the equation based on the function that is clicked from the menu items
+    def editfunction(self, name):
+        print('hello')
+        print(name)
+        gettxt = self.lineEdit_equation.text()
+        self.lineEdit_equation.setText(gettxt + name + '(x)')
 
 if __name__ == "__main__":
     import sys
